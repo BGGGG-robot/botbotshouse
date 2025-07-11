@@ -23,10 +23,10 @@
     }
     .message {
       margin: 8px 0;
-      font-size: 20px; /* Increased font size */
+      font-size: 20px;
     }
     .user {
-      color: black; /* User message color changed to black */
+      color: black;
       font-family: cursive;
     }
     .bot {
@@ -74,8 +74,9 @@
     <button id="send-button">CHAT</button>
   </div>
 
-  <!-- 🔊 HELLO SOUND -->
-  <audio id="hello-sound" src="hello.mp3"></audio>
+  <!-- 🔊 Sound effects -->
+  <audio id="hello-sound" src="hello.mp3" preload="auto"></audio>
+  <audio id="angry-sound" src="robot-talk-344757.mp3" preload="auto"></audio>
 
   <script>
     const chatbox = document.getElementById("chatbox");
@@ -97,6 +98,11 @@
       if (msg.includes("mad") || msg.includes("angry")) {
         document.body.style.backgroundColor = "red";
         chatbox.classList.add("angry-mode");
+
+        // 🔊 Play angry sound
+        const angrySound = document.getElementById("angry-sound");
+        if (angrySound) angrySound.play();
+
         setTimeout(() => {
           chatbox.classList.remove("angry-mode");
           document.body.style.backgroundColor = "#cceeff";
@@ -133,7 +139,7 @@
       } else if (msg.includes("hola")) {
         return "I was hoping you knew spanish! ciao, que tengas un buen dia!";
       } else if (msg.includes("game")) {
-        return "I love chess. Here's a fun tip. Use your knights and bishops early. Be careful, moving the queen too early can expose it to attacks from enemy pieces, forcing you to waste time and moves retreating it! ";
+        return "I love chess. Here's a fun tip. Use your knights and bishops early, and avoid using the queen too early in the opening as this can expose it to attacks!";
       } else if (msg.includes("hello")) {
         return "GOOOOOOOOOD MORRRRNNNNINGGGGG.";
       } else {
