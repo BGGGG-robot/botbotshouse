@@ -6,7 +6,7 @@
   <title>🚀 BOTBOT</title>
   <style>
     body {
-      background-color: #0d1b2a;
+      background-color: #cceeff;
       font-family: Helvetica, sans-serif;
       margin: 0;
       padding: 0;
@@ -19,13 +19,14 @@
       flex: 1;
       overflow-y: auto;
       padding: 20px;
-      background-color: #1b263b;
+      background-color: #cceeff;
     }
     .message {
       margin: 8px 0;
     }
     .user {
       color: aquamarine;
+      font-family: cursive;
     }
     .bot {
       color: pink;
@@ -33,7 +34,7 @@
     #input-area {
       display: flex;
       padding: 10px;
-      background-color: #0d1b2a;
+      background-color: #cceeff;
     }
     #user-input {
       flex: 1;
@@ -45,13 +46,21 @@
       outline: none;
     }
     #send-button {
-      background-color: #219ebc;
-      color: pink;
+      background-color: red;
+      color: white;
       border: none;
       padding: 10px 20px;
       font-weight: bold;
       font-size: 14px;
       cursor: pointer;
+    }
+    @keyframes angryFlash {
+      0%   { background-color: red; }
+      50%  { background-color: #ff9999; }
+      100% { background-color: red; }
+    }
+    .angry-mode {
+      animation: angryFlash 0.2s ease-in-out 6;
     }
   </style>
 </head>
@@ -61,8 +70,11 @@
   </div>
   <div id="input-area">
     <input id="user-input" type="text" placeholder="Type here..." />
-    <button id="send-button">Transmit</button>
+    <button id="send-button">CHAT</button>
   </div>
+
+  <!-- 🔊 HELLO SOUND -->
+  <audio id="hello-sound" src="hello.mp3"></audio>
 
   <script>
     const chatbox = document.getElementById("chatbox");
@@ -79,17 +91,29 @@
 
     function getResponse(input) {
       const msg = input.toLowerCase();
+
+      // ANGRY MODE TRIGGER
+      if (msg.includes("mad") || msg.includes("angry")) {
+        document.body.style.backgroundColor = "red";
+        chatbox.classList.add("angry-mode");
+        setTimeout(() => {
+          chatbox.classList.remove("angry-mode");
+          document.body.style.backgroundColor = "#cceeff";
+        }, 1500);
+        return "I AM VERY MAD 😡 WHO WROTE THAT?";
+      }
+
       if (msg.includes("name")) {
         return "I am BOTBOT, reporting for duty! 🤖";
       } else if (msg.includes("color")) {
-        return "Nebula purple is my favorite hue 🌌";
+        return "I used to be a pirate, so maroon is my favorite";
       } else if (msg.includes("animal")) {
-        return "Martian cats are quite fascinating. 🛸";
+        return "I like elephants, the largest land animal";
       } else if (msg.includes("math")) {
-        return "Math is the universal language... but ugh, fine. 📉";
+        return "math is my favorite subject!";
       } else if (msg.includes("joke")) {
         return "Why did the astronaut break up with the alien? It needed space. 😆";
-      } else if (msg.includes("wild") || msg.includes("mad")) {
+      } else if (msg.includes("wild")) {
         return "Loading Rozzam 7134, I will complete any task, just ask 🐥";
       } else if (msg.includes("delete")) {
         return "deleting everything jk lol";
@@ -98,11 +122,21 @@
       } else if (msg.includes("nihao")) {
         return "nihao, zai jian🇨🇳";
       } else if (msg.includes("!")) {
-        return "calm down, I'm sleeping";
+        return "calm down, I'm sleeping!";
       } else if (msg.includes("hi")) {
         return "Nice to meet you I am BOTBOT 😁";
+      } else if (msg.includes("food")) {
+        return "My favorite food is cookies. Step 1: preheat oven to 350°F. Step 2: mix sugar, flour, eggs, extra chocolate, and mint. Bake for 10 minutes and enjoy!";
+      } else if (msg.includes("read me a page of a book")) {
+        return "CHAPTER ONE THE BOY WHO LIVED CHAPTER ONE THE BOY WHO LIVED r. and Mrs. Dursley, of number four, Privet Drive, were proud to say that they were perfectly normal, thank you very much. They were the last people you’d expect to be involved in anything strange or mysterious, because they just didn’t hold with such nonsense. Mr. Dursley was the director of a firm called Grunnings, which made drills. He was a big, beefy man with hardly any neck, although he did have a very large mustache. Mrs. Dursley was thin and blonde and had nearly twice the usual amount of neck, which came in very useful as she spent so much of her time craning over garden fences, spying on the neighbors. The Dursleys had a small son called Dudley and in their opinion there was no finer boy anywhere. The Dursleys had everything they wanted, but they also had a secret, and their greatest fear was that somebody would discover it. They didn’t think they could bear it if anyone found out about the Potters. Mrs. Potter was Mrs. Dursley’s sister, but they hadn’t met for several years; in fact, Mrs. Dursley pretended she didn’t have a sister, because her sister and her good-for-nothing husband were as unDursleyish as it was possible to be. The Dursleys shuddered to think what the neighbors would say if the Potters arrived in the street. The Dursleys knew that the Potters had a small son, too, but they had never even seen him. This boy was another good reason for keeping the Potters away; they didn’t want Dudley mixing with a child like that";
+      } else if (msg.includes("hola")) {
+        return "I was hoping you knew spanish! ciao, que tengas un buen dia!";
+      } else if (msg.includes("game")) {
+        return "I love chess. Use your knights and bishops early, and don't bring the queen out too soon!";
+      } else if (msg.includes("hello")) {
+        return "GOOOOOOOOOD MORRRRNNNNINGGGGG.";
       } else {
-        return "Unrecognized signal. Please re-transmit command. 🛰️";
+        return "I'm still learning! let's try something else!";
       }
     }
 
@@ -112,6 +146,13 @@
       addMessage("user", input);
       const response = getResponse(input);
       addMessage("bot", response);
+
+      // 🔊 Play hello sound
+      if (input.toLowerCase().includes("hello")) {
+        const helloSound = document.getElementById("hello-sound");
+        helloSound.play();
+      }
+
       userInput.value = "";
     }
 
@@ -122,3 +163,7 @@
   </script>
 </body>
 </html>
+  </script>
+</body>
+</html>
+
